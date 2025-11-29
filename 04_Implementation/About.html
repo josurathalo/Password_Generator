@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title data-i18n="aboutTitle">About — PW Generator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-nav" id="siteNav">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="Main.html" data-i18n="navHome">Home</a>
+          <a href="About.html" data-i18n="navAbout" class="active">About</a>
+          <a href="Help.html" data-i18n="navHelp">Help</a>
+        </nav>
+      </div>
+
+      <div class="nav-center">
+        <a href="Main.html" class="logo-link" aria-label="Home">
+          <div class="logo">PW</div>
+        </a>
+      </div>
+
+      <div class="nav-right">
+        <select id="navLang" aria-label="Language selector">
+          <option value="th">ไทย</option>
+          <option value="en">English</option>
+        </select>
+        <button id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+          <span class="hamburger" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" style="padding-top:10px;">
+    <section class="card about-page" style="max-width:1100px;margin:20px auto;padding:22px;">
+      <header style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div>
+          <h1 data-i18n="aboutTitle">เกี่ยวกับ</h1>
+          <p class="lead" data-i18n="aboutIntro">เครื่องมือนี้ช่วยสร้างรหัสผ่านสุ่มที่ปลอดภัย โดยผู้ใช้กำหนดความยาวและเลือกประเภทอักขระได้</p>
+        </div>
+        <div style="min-width:160px;text-align:right">
+          <div class="pill" style="display:inline-block;padding:8px 12px;border-radius:999px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#fff;font-weight:700" data-i18n="aboutSince">Since 2022</div>
+        </div>
+      </header>
+
+      <hr style="margin:18px 0;border:0;border-top:1px solid rgba(255,255,255,0.04)" />
+
+      <section>
+        <h2 data-i18n="aboutHistoryTitle">ประวัติความเป็นมา</h2>
+        <p data-i18n="aboutHistory">ทีมเริ่มต้นโครงการจากความต้องการสร้างเครื่องมือออนไลน์ที่ช่วยให้ผู้ใช้ทั่วไปสามารถสร้างรหัสผ่านที่ปลอดภัยได้อย่างรวดเร็ว โดยไม่ต้องติดตั้งซอฟต์แวร์เพิ่มเติม เราเน้นใช้งานบนเบราว์เซอร์ด้วย Web Crypto API เพื่อให้การสุ่มมีความปลอดภัยมากกว่าการใช้ Math.random</p>
+      </section>
+
+      <section style="margin-top:12px">
+        <h2 data-i18n="aboutMissionTitle">พันธกิจ (Mission)</h2>
+        <p data-i18n="aboutMission">มุ่งมั่นส่งมอบเครื่องมือที่ปลอดภัย เข้าถึงได้ง่าย และโปร่งใส เพื่อช่วยให้ผู้ใช้ปกป้องบัญชีและข้อมูลส่วนตัวอย่างมีประสิทธิภาพ</p>
+      </section>
+
+      <section style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div>
+          <h3 data-i18n="aboutHowTitle">วิธีการทำงาน</h3>
+          <ul>
+            <li data-i18n="aboutHow1">ใช้ crypto.getRandomValues เพื่อสุ่มตัวอักษรอย่างปลอดภัย</li>
+            <li data-i18n="aboutHow2">รับประกันว่าถ้าเลือกหลายประเภทจะมีตัวอักขระจากแต่ละประเภทอย่างน้อยหนึ่งตัว</li>
+            <li data-i18n="aboutHow3">ไม่เก็บรหัสผ่านที่ผู้ใช้สร้างในเซิร์ฟเวอร์ (ถ้าไม่ได้ตั้งค่าเพิ่มเติม)</li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-i18n="aboutSecurityTitle">ความปลอดภัย</h3>
+          <p data-i18n="aboutSecurity">เราเน้นการใช้ API ของเบราว์เซอร์และหลักปฏิบัติที่ดี: ไม่ส่งรหัสผ่านที่สร้างไปยังเซิร์ฟเวอร์โดยไม่จำเป็น ผู้ใช้ควรตรวจสอบว่ากำลังใช้งานผ่าน HTTPS และเก็บรหัสผ่านในตัวจัดการรหัสผ่านที่เชื่อถือได้</p>
+        </div>
+      </section>
+
+      <section style="margin-top:12px">
+        <h3 data-i18n="aboutRoadmapTitle">แผนพัฒนา (Roadmap)</h3>
+        <ol>
+          <li data-i18n="roadmap1">เพิ่มระบบบัญชีผู้ใช้และซิงค์แบบเข้ารหัส (เลือกเปิดใช้)</li>
+          <li data-i18n="roadmap2">เชื่อมต่อการชำระเงินแบบปลอดภัย (Stripe) สำหรับแผน Pro</li>
+          <li data-i18n="roadmap3">เสนอ API สำหรับองค์กรและ SSO</li>
+        </ol>
+      </section>
+
+      <section style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start;">
+        <div style="flex:1;min-width:260px">
+          <h3 data-i18n="aboutTeamTitle">ทีมงาน</h3>
+          <p data-i18n="aboutTeam">ทีมประกอบด้วยนักพัฒนาเว็บความปลอดภัยและ UI/UX ที่ทำงานร่วมกันเพื่อลดความซับซ้อนของ UX และเพิ่มความปลอดภัยพื้นฐาน</p>
+        </div>
+        <div style="min-width:220px">
+          <h3 data-i18n="aboutContactTitle">ติดต่อ</h3>
+          <p data-i18n="aboutContact">สำหรับคำถามหรือการร่วมมือ: <a href="mailto:you@example.com">you@example.com</a></p>
+        </div>
+      </section>
+
+      <p style="margin-top:18px;text-align:center;">
+        <a href="Main.html" class="btn" style="text-decoration:none" data-i18n="backHome">กลับไปที่เครื่องมือ</a>
+      </p>
+    </section>
+  </main>
+
+  <script src="nav.js"></script>
+</body>
+</html>

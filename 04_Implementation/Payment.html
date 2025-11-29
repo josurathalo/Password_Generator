@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Payment — PW Generator (Demo)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="wrap" style="min-height:60vh;align-items:center;">
+    <section class="card" style="max-width:520px;margin:0 auto;text-align:center">
+      <h2>ชำระเงินเพื่อเพิ่มการใช้งาน (ตัวอย่าง)</h2>
+      <p class="lead">บัญชีของคุณใช้สิทธิ์ฟรีครบ 3 ครั้งแล้ว</p>
+      <p class="small">หน้านี้เป็น placeholder สำหรับเชื่อมระบบชำระเงินจริง (เช่น Stripe) ใน production</p>
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:14px">
+        <a href="Main.html" class="btn secondary" style="text-decoration:none">กลับไปลองอีกครั้ง</a>
+        <button id="btnPay" class="btn">Simulate Pay</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById('btnPay').addEventListener('click', ()=>{
+      const user = localStorage.getItem('user');
+      if(!user){ alert('กรุณาเข้าสู่ระบบ'); location.href='Login.html'; return; }
+      const users = JSON.parse(localStorage.getItem('users')||'{}');
+      if(users[user]){ users[user].uses = 0; localStorage.setItem('users', JSON.stringify(users)); alert('ชำระเงินสำเร็จ (จำลอง)'); location.href='Main.html'; return; }
+      alert('บัญชีไม่พบ'); location.href='Login.html';
+    });
+  </script>
+</body>
+</html>

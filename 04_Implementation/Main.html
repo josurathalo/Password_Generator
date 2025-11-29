@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title data-i18n="title">Random Password Generator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-nav" id="siteNav">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="Main.html" data-i18n="navHome" class="active">Home</a>
+          <a href="About.html" data-i18n="navAbout">About</a>
+          <a href="Help.html" data-i18n="navHelp">Help</a>
+        </nav>
+      </div>
+
+      <div class="nav-center">
+        <a href="Main.html" class="logo-link" aria-label="Home">
+          <div class="logo">PW</div>
+        </a>
+      </div>
+
+      <div class="nav-right">
+        <select id="navLang" aria-label="Language selector">
+          <option value="th">ไทย</option>
+          <option value="en">English</option>
+        </select>
+        <button id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+          <span class="hamburger" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="card" role="main" aria-labelledby="title">
+      <div class="header">
+        <div class="logo">PW</div>
+        <div style="flex:1">
+          <h1 id="title" data-i18n="title">Random Password Generator</h1>
+          <p class="lead" data-i18n="lead">สร้างรหัสผ่านสุ่ม — กำหนดความยาวและประเภทอักขระได้ตามต้องการ</p>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px">
+          <label for="langSelect" class="small" data-i18n="langLabel" style="margin-right:6px">ภาษา</label>
+          <select id="langSelect" title="Language">
+            <option value="th">ไทย</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="left">
+          <label for="length" data-i18n="lengthLabel">ความยาวรหัสผ่าน (4–128)</label>
+          <div class="row">
+            <div class="slider" style="flex:1">
+              <input id="lengthRange" type="range" min="4" max="128" value="16" />
+            </div>
+            <input id="lengthNumber" type="number" min="4" max="128" value="16" />
+          </div>
+
+          <div style="margin-top:8px">
+            <label data-i18n="charsLabel">รวมอักขระ</label>
+            <div class="toggles">
+              <label class="toggle"><input id="lowercase" type="checkbox" checked /> <span data-i18n="lowercase">ตัวอักษรพิมพ์เล็ก (a–z)</span></label>
+              <label class="toggle"><input id="uppercase" type="checkbox" checked /> <span data-i18n="uppercase">ตัวอักษรพิมพ์ใหญ่ (A–Z)</span></label>
+              <label class="toggle"><input id="numbers" type="checkbox" checked /> <span data-i18n="numbers">ตัวเลข (0–9)</span></label>
+              <label class="toggle"><input id="symbols" type="checkbox" /> <span data-i18n="symbols">สัญลักษณ์ (!@#$...)</span></label>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="generateBtn" class="btn" title="สร้างรหัสผ่าน" data-i18n="generate">Generate</button>
+            <button id="copyBtn" class="btn secondary" title="คัดลอก" data-i18n="copy">Copy</button>
+            <button id="toggleShowBtn" class="btn secondary" title="แสดง/ซ่อน" data-i18n="show">Show</button>
+          </div>
+
+          <div class="output" aria-live="polite" style="margin-top:8px">
+            <input id="output" readonly value="" aria-label="รหัสผ่านที่สร้างแล้ว" data-i18n-attr-aria="outputAria" />
+          </div>
+
+          <div class="meter" aria-hidden="true"><i id="meterBar"></i></div>
+          <div class="meter-text"><span id="strengthText" data-i18n="strength">Strength</span><span id="scoreText">0%</span></div>
+        </div>
+
+        <div class="right">
+          <label data-i18n="rulesTitle">ตัวอย่างกฎการใช้งาน</label>
+          <ul class="small" style="margin-top:8px">
+            <li data-i18n="rule1">การเลือกตัวอักษรหลายประเภทจะเพิ่มความแข็งแรงของรหัสผ่าน</li>
+            <li data-i18n="rule2">ความยาวมากขึ้น = ปลอดภัยขึ้น</li>
+            <li data-i18n="rule3">ปุ่ม Copy ใช้คัดลอกรหัสผ่านไปยัง clipboard</li>
+            <li data-i18n="rule4">ระบบใช้ crypto.getRandomValues เพื่อสุ่มที่ปลอดภัย</li>
+          </ul>
+
+          <hr style="margin:16px 0;border:0;border-top:1px solid rgba(255,255,255,0.02)" />
+
+          <label data-i18n="previewTitle">ตัวอย่างรหัสผ่านจากการตั้งค่าปัจจุบัน</label>
+          <div style="margin-top:8px">
+            <input id="preview" readonly style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" />
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <button id="regenPreview" class="btn secondary" data-i18n="regenPreview">รีเฟรชตัวอย่าง</button>
+              <button id="usePreview" class="btn" data-i18n="usePreview">ใช้ตัวอย่างนี้</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="about-brief" aria-labelledby="aboutBriefTitle" style="width:100%;max-width:1100px;margin:0 auto;">
+      <div class="card" style="padding:18px;">
+        <div class="about-brief-inner" style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+          <div style="flex:1;min-width:260px;">
+            <h3 id="aboutBriefTitle" data-i18n="aboutBriefTitle">เกี่ยวกับเรา</h3>
+            <p class="small" data-i18n="aboutBriefLead">เครื่องมือนี้เริ่มจากแนวคิดว่าการสร้างรหัสผ่านควรปลอดภัยและใช้งานง่ายสำหรับทุกคน</p>
+            <p data-i18n="aboutBriefText">เรามุ่งมั่นพัฒนาเครื่องมือที่ใช้สุ่มแบบปลอดภัย (crypto.getRandomValues) พร้อม UI เข้าใจง่าย และแนวทางปฏิบัติด้านความปลอดภัยเพื่อช่วยให้ผู้ใช้ปกป้องข้อมูลส่วนตัว</p>
+            <p style="margin-top:8px;"><a href="About.html" class="btn" data-i18n="aboutReadMore">อ่านเพิ่มเติมเกี่ยวกับเรา</a></p>
+          </div>
+          <div style="width:260px;min-width:220px;">
+            <div class="stats" style="display:flex;flex-direction:column;gap:8px;">
+              <div class="stat" style="display:flex;justify-content:space-between;align-items:center;">
+                <div><strong data-i18n="statYears">2022+</strong><div class="small" data-i18n="statSince">ก่อตั้ง</div></div>
+                <div class="muted small" data-i18n="statUsers">ผู้ใช้ตัวอย่าง</div>
+              </div>
+              <div class="stat" style="display:flex;justify-content:space-between;align-items:center;">
+                <div><strong data-i18n="statSecure">Secure</strong><div class="small" data-i18n="statEngine">Random engine</div></div>
+                <div class="muted small" data-i18n="statCrypto">crypto.getRandomValues</div>
+              </div>
+              <div class="stat" style="display:flex;justify-content:space-between;align-items:center;">
+                <div><strong data-i18n="statFree">3</strong><div class="small" data-i18n="statFreeNote">ครั้งทดลองใช้ฟรี</div></div>
+                <div class="muted small" data-i18n="statPro">แผน Pro</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="promo" aria-labelledby="promoTitle" style="width:100%;max-width:1100px;margin:18px auto;">
+      <div class="promo-inner">
+        <div class="promo-header">
+          <h2 id="promoTitle" data-i18n="promoTitle">โปรโมชั่นและราคา</h2>
+          <p class="lead small" data-i18n="promoLead">ทดลองใช้งานฟรีสำหรับ 3 ครั้งแรก — อัปเกรดเพื่อใช้งานไม่จำกัดและฟีเจอร์เพิ่มเติม</p>
+        </div>
+
+        <div class="pricing-grid" role="list">
+          <div class="pricing-card" role="listitem" aria-label="Free plan">
+            <div class="card-top" data-i18n="planFree">ฟรี</div>
+            <div class="price" data-i18n="priceFree">฿0 <small>/ ฟรี 3 ครั้ง</small></div>
+            <ul class="features">
+              <li data-i18n="planFeat1">สร้างรหัสผ่าน (4–128)</li>
+              <li data-i18n="planFeat2">Meter ความแข็งแรง</li>
+              <li data-i18n="planFeat3">คัดลอกไปยังคลิปบอร์ด</li>
+            </ul>
+            <div class="card-actions">
+              <a class="btn secondary" href="Login.html" data-i18n="ctaUseAccount">ใช้บัญชี</a>
+              <a class="btn" href="Payment.html" data-i18n="ctaUpgrade">อัปเกรด</a>
+            </div>
+          </div>
+
+          <div class="pricing-card popular" role="listitem" aria-label="Pro plan">
+            <div class="card-top" data-i18n="planPro">Pro</div>
+            <div class="price" data-i18n="pricePro">฿99 <small>/ เดือน</small></div>
+            <ul class="features">
+              <li data-i18n="planFeat4">ไม่จำกัด (Pro)</li>
+              <li data-i18n="planFeat2">Meter ความแข็งแรง</li>
+              <li data-i18n="planFeat3">คัดลอกไปยังคลิปบอร์ด</li>
+            </ul>
+            <div class="card-actions">
+              <a class="btn" href="Payment.html" data-i18n="ctaUpgrade">สมัคร Pro</a>
+            </div>
+          </div>
+
+          <div class="pricing-card" role="listitem" aria-label="Enterprise plan">
+            <div class="card-top" data-i18n="planEnterprise">องค์กร</div>
+            <div class="price" data-i18n="priceContact">ติดต่อ</div>
+            <ul class="features">
+              <li data-i18n="planFeat1">License ระดับองค์กร</li>
+              <li data-i18n="planFeat3">การสนับสนุนพิเศษ</li>
+              <li data-i18n="planFeat4">API/SSO (พร้อมให้บริการ)</li>
+            </ul>
+            <div class="card-actions">
+              <a class="btn secondary" href="About.html" data-i18n="ctaContact">ติดต่อเรา</a>
+            </div>
+          </div>
+        </div>
+
+        <p class="promo-note small" style="margin-top:12px" data-i18n="promoNote">
+          หมายเหตุ: หน้านี้เป็นตัวอย่างการแสดงโปรโมชั่น หากต้องการเชื่อมต่อระบบชำระเงินจริง แนะนำใช้ Stripe หรือระบบ Payment Gateway ที่ปลอดภัย
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <script src="nav.js"></script>
+  <script src="main.js"></script>
+
+  <!-- New footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-left"><small data-i18n="footerCopyright">© 2025 PW Generator</small></div>
+      <div class="footer-center">
+        <small>
+          <a href="About.html" data-i18n="footerAboutLink">About</a>
+          &nbsp;·&nbsp;
+          <a href="Help.html" data-i18n="footerHelpLink">Help</a>
+        </small>
+      </div>
+      <div class="footer-right"><small data-i18n="footerVersion">v1.0</small></div>
+    </div>
+  </footer>
+</body>
+</html>

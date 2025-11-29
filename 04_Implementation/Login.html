@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login — PW Generator (Demo)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="wrap" style="min-height:60vh;align-items:center;">
+    <section class="card" style="max-width:420px;margin:0 auto;">
+      <h2>เข้าสู่ระบบ / ลงทะเบียน (ตัวอย่าง)</h2>
+      <form id="authForm" onsubmit="return false;">
+        <label>ชื่อผู้ใช้ / อีเมล</label>
+        <input id="authUser" required />
+        <label>รหัสผ่าน</label>
+        <input id="authPass" type="password" required />
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button id="btnLogin" class="btn" type="button">Login</button>
+          <button id="btnRegister" class="btn secondary" type="button">Register</button>
+        </div>
+      </form>
+      <p class="small" style="margin-top:12px">หมายเหตุ: ระบบตัวอย่างเก็บข้อมูลใน localStorage เท่านั้น — ไม่ปลอดภัยสำหรับโปรดักชัน</p>
+      <p style="margin-top:12px"><a href="Main.html" class="small" style="color:var(--muted)">ย้อนกลับ</a></p>
+    </section>
+  </main>
+
+  <script>
+    // very small demo auth (insecure) - localStorage users map
+    const authUser = document.getElementById('authUser');
+    const authPass = document.getElementById('authPass');
+    const btnLogin = document.getElementById('btnLogin');
+    const btnRegister = document.getElementById('btnRegister');
+
+    function readUsers(){ try{ return JSON.parse(localStorage.getItem('users')||'{}'); }catch(e){ return {}; } }
+    function writeUsers(u){ localStorage.setItem('users', JSON.stringify(u)); }
+
+    btnRegister.addEventListener('click', ()=>{
+      const u = authUser.value.trim(); const p = authPass.value;
+      if(!u||!p){ alert('กรอกข้อมูลให้ครบ'); return; }
+      const users = readUsers();
+      if(users[u]) { alert('บัญชีมีอยู่แล้ว'); return; }
+      users[u] = { pass: p, uses: 0 };
+      writeUsers(users);
+      localStorage.setItem('user', u);
+      location.href = 'Main.html';
+    });
+
+    btnLogin.addEventListener('click', ()=>{
+      const u = authUser.value.trim(); const p = authPass.value;
+      if(!u||!p){ alert('กรอกข้อมูลให้ครบ'); return; }
+      const users = readUsers();
+      if(!users[u] || users[u].pass !== p){ alert('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง'); return; }
+      localStorage.setItem('user', u);
+      location.href = 'Main.html';
+    });
+
+    // redirect back to main if already logged in
+    if(localStorage.getItem('user')) location.href = 'Main.html';
+  </script>
+</body>
+</html>
